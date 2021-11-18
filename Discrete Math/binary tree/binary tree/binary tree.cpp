@@ -1,6 +1,6 @@
 ﻿/*
 * @author Nickel_Angel (1239004072@qq.com)
-* @copyright Copyright (c)
+* @copyright Copyright (c) 2021
 */
 
 #include <algorithm>
@@ -8,8 +8,7 @@
 #include <cstring>
 #include <iostream>
 
-const int maxn = 1e5 + 10;
-int n, a[maxn];
+int n, a[1010];
 
 int main()
 {

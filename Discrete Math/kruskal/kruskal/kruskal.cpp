@@ -1,6 +1,6 @@
 ﻿/*
 * @author Nickel_Angel (1239004072@qq.com)
-* @copyright Copyright (c)
+* @copyright Copyright (c) 2021
 */
 
 #include <algorithm>
@@ -10,7 +10,7 @@
 const int maxn = 1e5 + 10;
 const int maxm = 2e5 + 10;
 
-int n, m;
+int n, m, val[1010][1010], ans[maxn][3];
 
 class union_find_set
 {
@@ -66,21 +66,53 @@ inline void kruskal()
         if (S.unite(e[i].from, e[i].to))
         {
             res += e[i].val;
-            printf("%d %d %d\n", e[i].from, e[i].to, e[i].val);
             ++cnt;
+            ans[cnt][0] = e[i].from, ans[cnt][1] = e[i].to, ans[cnt][2] = e[i].val;
             if (cnt == n - 1)
                 break;
         }
     }
+    if (cnt < n - 1)
+    {
+        puts("Invaild input!");
+        return;
+    }
+    for (int i = 1; i <= cnt; ++i)
+        printf("%d %d %d\n", ans[i][0], ans[i][1], ans[i][2]);
     printf("%d\n", res);
 }
 
 int main()
 {
-    scanf_s("%d%d", &n, &m);
-    for (int i = 1; i <= m; ++i)
+    int opt;
+    scanf_s("%d%d", &opt, &n);
+    if (opt == 1)
     {
-        scanf_s("%d%d%d", &e[i].from, &e[i].to, &e[i].val);
+        m = 0;
+        for (int i = 1, x; i <= n; ++i)
+        {
+            for (int j = 1; j <= n; ++j)
+            {
+                scanf_s("%d", &x);
+                if (x)
+                {
+                    e[++m].from = i;
+                    e[m].to = j;
+                    e[m].val = x;
+                }
+            }
+        }
+    }
+    else if (opt == 2)
+    {
+        scanf_s("%d", &m);
+        for (int i = 1; i <= m; ++i)
+            scanf_s("%d%d%d", &e[i].from, &e[i].to, &e[i].val);
+    }
+    if (m < n - 1 || (opt != 1 && opt != 2))
+    {
+        puts("Invaild input!");
+        return 0;
     }
     kruskal();
     return 0;

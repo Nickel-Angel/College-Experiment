@@ -1,6 +1,6 @@
 ﻿/*
 * @author Nickel_Angel (1239004072@qq.com)
-* @copyright Copyright (c)
+* @copyright Copyright (c) 2021
 */
 
 #include <cstdio>
@@ -48,23 +48,34 @@ struct Matrix
 int n, m;
 Matrix A, B;
 
+inline Matrix power(Matrix A, int b)
+{
+    Matrix res;
+    res.n = A.n;
+    memset(res.v, 0, sizeof(res.v));
+    for (int i = 1; i <= res.n; ++i)
+        res.v[i][i] = 1;
+    while (b)
+    {
+        if (b & 1)
+            res = res * A;
+        A = A * A;
+        b >>= 1;
+    }
+    return res;
+}
+
 int main()
 {
     scanf_s("%d%d", &n, &m);
     memset(A.v, 0, sizeof(A.v));
-    memset(B.v, 0, sizeof(B.v));
     A.n = n;
     for (int i = 0, u, v; i < m; ++i)
     {
         scanf_s("%d%d", &u, &v);
         A.v[u][v] = 1;
     }
-    B = A;
-    for (int i = 1; i <= n; ++i)
-    {
-        B = A * B;
-        printf("%d\n", i + 1);
-        B.print();
-    }
+    B = power(A, m);
+    B.print();
     return 0;
 }
